@@ -1,25 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { AnimatePresence, motion } from "framer-motion";
+
+const Wrapper = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+`;
+
+const Box = styled(motion.div)`
+  background-color: gray; ;
+`;
 
 function App() {
+  const item = { id: Date.now(), subtitle: "subtitle", title: "title" };
+  const items = [item, item, item, item];
+  const [selectedId, setSelectedId] = useState("");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Wrapper>
+      {items.map((item) => (
+        <Box
+          layoutId={item.id + ""}
+          onClick={() => setSelectedId(item.id + "")}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <motion.h5>{item.subtitle}</motion.h5>
+          <motion.h2>{item.title}</motion.h2>
+        </Box>
+      ))}
+
+      <AnimatePresence>
+        {selectedId && (
+          <motion.div layoutId={selectedId}>
+            <motion.h5>{item.subtitle}</motion.h5>
+            <motion.h2>{item.title}</motion.h2>
+            <motion.button onClick={() => setSelectedId("")} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </Wrapper>
   );
 }
 
