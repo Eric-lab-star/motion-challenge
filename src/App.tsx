@@ -13,28 +13,28 @@ const Box = styled(motion.div)`
 `;
 
 function App() {
-  const item = { id: Date.now(), subtitle: "subtitle", title: "title" };
-  const items = [item, item, item, item];
+  const items = [
+    { id: "1", subtitle: "subtitle", title: "title" },
+    { id: "2", subtitle: "subtitle", title: "title" },
+    { id: "3", subtitle: "subtitle", title: "title" },
+    { id: "4", subtitle: "subtitle", title: "title" },
+  ];
   const [selectedId, setSelectedId] = useState("");
   return (
     <Wrapper>
       {items.map((item) => (
-        <Box
-          layoutId={item.id + ""}
-          onClick={() => setSelectedId(item.id + "")}
-        >
+        <Box layoutId={item.id} onClick={() => setSelectedId(item.id)}>
           <motion.h5>{item.subtitle}</motion.h5>
           <motion.h2>{item.title}</motion.h2>
         </Box>
       ))}
-
       <AnimatePresence>
         {selectedId && (
-          <motion.div layoutId={selectedId}>
-            <motion.h5>{item.subtitle}</motion.h5>
-            <motion.h2>{item.title}</motion.h2>
-            <motion.button onClick={() => setSelectedId("")} />
-          </motion.div>
+          <Box layoutId={selectedId}>
+            <motion.h5>subtitle</motion.h5>
+            <motion.h2>title</motion.h2>
+            <motion.button onClick={() => setSelectedId("")}>x</motion.button>
+          </Box>
         )}
       </AnimatePresence>
     </Wrapper>
